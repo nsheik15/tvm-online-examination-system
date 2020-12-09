@@ -1,0 +1,25 @@
+<div class="div-container">
+  <div class="div-logo"><img src="./../../assets/TVM_LOGO.png" alt=""></div>
+
+  <div class="div-content">
+    <div class="left-div">
+      <div class="div-val">Welcome {{ user }}!</div>
+      <div class="div-val">Time: {{ time | date:"HH:mm:ss" }}</div>
+    </div>
+    <h2 class="title">Online Assessment Test</h2>
+    <div class="right-div">
+      <div class="timer">Remaining Time: &nbsp; <span *ngIf="!isTimerStarted">-</span> <span *ngIf="isTimerStarted"> {{mm}}:{{ss}} </span></div>
+      <div class="div-icon">
+        <mat-icon mat-button class="account-icon" [matMenuTriggerFor]="menu">account_circle</mat-icon>
+        <mat-menu #menu="matMenu">
+          <div *ngIf="isTimerStarted" >
+            <button mat-menu-item (click)="onEndTest()">End Test</button>
+          </div>
+          <div *ngIf="!isTimerStarted">
+            <button [disabled]="true" mat-menu-item>Test not started</button>
+          </div>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+</div>

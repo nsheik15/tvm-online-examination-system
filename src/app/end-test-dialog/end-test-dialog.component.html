@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Warning</h2>
+<mat-dialog-content class="mat-typography">
+  <p>To submit the test, click the submit button below...</p>
+  <p>If you end the test, your test will not be submitted. You will be disqualified!</p>
+  <p class="pad-top">Are you sure, you want to end the test?</p>
+  <p></p>
+</mat-dialog-content>
+<mat-dialog-actions align=end>
+  <button mat-button [mat-dialog-close]="false" mat-dialog-close color="accent">Cancel</button>
+  <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial color="primary">End Test</button>
+</mat-dialog-actions>

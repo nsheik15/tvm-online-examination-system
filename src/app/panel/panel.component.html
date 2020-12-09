@@ -1,0 +1,478 @@
+<div class="div-container">
+  <div class="side-nav">
+    <div class="side-nav-title">
+      <h2>Question Panel</h2>
+      <div class="title-underline">
+        <div class="title-circle-left"></div>
+        <div class="title-line"></div>
+        <div class="title-circle-right"></div>
+      </div>
+    </div>
+
+    <div class="side-nav-grid">
+      <div (click)="on1()" class="question-no" [ngClass]="{'active': active[0], 'visited': visited[0], 'answered': answered[0]}">1</div>
+      <div (click)="on2()" class="question-no" [ngClass]="{'active': active[1], 'visited': visited[1], 'answered': answered[1]}">2</div>
+      <div (click)="on3()" class="question-no" [ngClass]="{'active': active[2], 'visited': visited[2], 'answered': answered[2]}">3</div>
+      <div (click)="on4()" class="question-no" [ngClass]="{'active': active[3], 'visited': visited[3], 'answered': answered[3]}">4</div>
+      <div (click)="on5()" class="question-no" [ngClass]="{'active': active[4], 'visited': visited[4], 'answered': answered[4]}">5</div>
+      <div (click)="on6()" class="question-no" [ngClass]="{'active': active[5], 'visited': visited[5], 'answered': answered[5]}">6</div>
+      <div (click)="on7()" class="question-no" [ngClass]="{'active': active[6], 'visited': visited[6], 'answered': answered[6]}">7</div>
+      <div (click)="on8()" class="question-no" [ngClass]="{'active': active[7], 'visited': visited[7], 'answered': answered[7]}">8</div>
+      <div (click)="on9()" class="question-no" [ngClass]="{'active': active[8], 'visited': visited[8], 'answered': answered[8]}">9</div>
+      <div (click)="on10()" class="question-no" [ngClass]="{'active': active[9], 'visited': visited[9], 'answered': answered[9]}">10</div>
+      <div (click)="on11()" class="question-no" [ngClass]="{'active': active[10], 'visited': visited[10], 'answered': answered[10]}">11</div>
+      <div (click)="on12()" class="question-no" [ngClass]="{'active': active[11], 'visited': visited[11], 'answered': answered[11]}">12</div>
+      <div (click)="on13()" class="question-no" [ngClass]="{'active': active[12], 'visited': visited[12], 'answered': answered[12]}">13</div>
+      <div (click)="on14()" class="question-no" [ngClass]="{'active': active[13], 'visited': visited[13], 'answered': answered[13]}">14</div>
+      <div (click)="on15()" class="question-no" [ngClass]="{'active': active[14], 'visited': visited[14], 'answered': answered[14]}">15</div>
+      <div (click)="on16()" class="question-no" [ngClass]="{'active': active[15], 'visited': visited[15], 'answered': answered[15]}">16</div>
+      <div (click)="on17()" class="question-no" [ngClass]="{'active': active[16], 'visited': visited[16], 'answered': answered[16]}">17</div>
+      <div (click)="on18()" class="question-no" [ngClass]="{'active': active[17], 'visited': visited[17], 'answered': answered[17]}">18</div>
+      <div (click)="on19()" class="question-no" [ngClass]="{'active': active[18], 'visited': visited[18], 'answered': answered[18]}">19</div>
+      <div (click)="on20()" class="question-no" [ngClass]="{'active': active[19], 'visited': visited[19], 'answered': answered[19]}">20</div>
+      <div (click)="on21()" class="question-no" [ngClass]="{'active': active[20], 'visited': visited[20], 'answered': answered[20]}">21</div>
+      <div (click)="on22()" class="question-no" [ngClass]="{'active': active[21], 'visited': visited[21], 'answered': answered[21]}">22</div>
+      <div (click)="on23()" class="question-no" [ngClass]="{'active': active[22], 'visited': visited[22], 'answered': answered[22]}">23</div>
+      <div (click)="on24()" class="question-no" [ngClass]="{'active': active[23], 'visited': visited[23], 'answered': answered[23]}">24</div>
+      <div (click)="on25()" class="question-no" [ngClass]="{'active': active[24], 'visited': visited[24], 'answered': answered[24]}">25</div>
+      <div (click)="on26()" class="question-no" [ngClass]="{'active': active[25], 'visited': visited[25], 'answered': answered[25]}">26</div>
+      <div (click)="on27()" class="question-no" [ngClass]="{'active': active[26], 'visited': visited[26], 'answered': answered[26]}">27</div>
+      <div (click)="on28()" class="question-no" [ngClass]="{'active': active[27], 'visited': visited[27], 'answered': answered[27]}">28</div>
+      <div (click)="on29()" class="question-no" [ngClass]="{'active': active[28], 'visited': visited[28], 'answered': answered[28]}">29</div>
+      <div (click)="on30()" class="question-no" [ngClass]="{'active': active[29], 'visited': visited[29], 'answered': answered[29]}">30</div>
+    </div>
+  </div>
+  <div class="main-bar">
+    <div class="title">
+      <exam-title></exam-title>
+    </div>
+    <div class="question-panel">
+      <form [formGroup]="questionForm">
+        <div class="question" *ngIf="currActive === 1">
+          <label id="q1">1. &nbsp; {{ question[0] }}</label>
+          <mat-radio-group
+            aria-labelledby="q1"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q1">
+            <mat-radio-button class="radio-button" *ngFor="let op of op1" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 2">
+          <label id="q2">2. &nbsp; {{ question[1] }}</label>
+          <mat-radio-group
+            aria-labelledby="q2"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q2">
+            <mat-radio-button class="radio-button" *ngFor="let op of op2" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 3">
+          <label id="q3">3. &nbsp; {{ question[2] }}</label>
+          <mat-radio-group
+            aria-labelledby="q3"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q3">
+            <mat-radio-button class="radio-button" *ngFor="let op of op3" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 4">
+          <label id="q4">4. &nbsp; {{ question[3] }}</label>
+          <mat-radio-group
+            aria-labelledby="q4"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q4">
+            <mat-radio-button class="radio-button" *ngFor="let op of op4" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 5">
+          <label id="q5">5. &nbsp; {{ question[4] }}</label>
+          <mat-radio-group
+            aria-labelledby="q5"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q5">
+            <mat-radio-button class="radio-button" *ngFor="let op of op5" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 6">
+          <label id="q6">6. &nbsp; {{ question[5] }}</label>
+          <mat-radio-group
+            aria-labelledby="q6"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q6">
+            <mat-radio-button class="radio-button" *ngFor="let op of op6" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 7">
+          <label id="q7">7. &nbsp; {{ question[6] }}</label>
+          <mat-radio-group
+            aria-labelledby="q7"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q7">
+            <mat-radio-button class="radio-button" *ngFor="let op of op7" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 8">
+          <label id="q8">8. &nbsp; {{ question[7] }}</label>
+          <mat-radio-group
+            aria-labelledby="q8"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q8">
+            <mat-radio-button class="radio-button" *ngFor="let op of op8" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 9">
+          <label id="q9">9. &nbsp; {{ question[8] }}</label>
+          <mat-radio-group
+            aria-labelledby="q9"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q9">
+            <mat-radio-button class="radio-button" *ngFor="let op of op9" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 10">
+          <label id="q10">10. &nbsp; {{ question[9] }}</label>
+          <mat-radio-group
+            aria-labelledby="q10"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q10">
+            <mat-radio-button class="radio-button" *ngFor="let op of op10" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 11">
+          <label id="q11">11. &nbsp; {{ question[10] }}</label>
+          <mat-radio-group
+            aria-labelledby="q11"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q11">
+            <mat-radio-button class="radio-button" *ngFor="let op of op11" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 12">
+          <label id="q12">12. &nbsp; {{ question[11] }}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; enum Season{{ '{'
+          }}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WINTER,SPRING,SUMMER;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ '}'
+        }};</label>
+          <mat-radio-group
+            aria-labelledby="q12"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q12">
+            <mat-radio-button class="radio-button" *ngFor="let op of op12" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 13">
+          <label id="q13">13. &nbsp; {{ question[12] }}</label>
+          <mat-radio-group
+            aria-labelledby="q13"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q13">
+            <mat-radio-button class="radio-button" *ngFor="let op of op13" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 14">
+          <label id="q14">14. &nbsp; {{ question[13] }}</label>
+          <mat-radio-group
+            aria-labelledby="q14"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q14">
+            <mat-radio-button class="radio-button" *ngFor="let op of op14" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 15">
+          <label id="q15">15. &nbsp; {{ question[14] }}</label>
+          <mat-radio-group
+            aria-labelledby="q15"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q15">
+            <mat-radio-button class="radio-button" *ngFor="let op of op15" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 16">
+          <label id="q16">16. &nbsp; {{ question[15] }}</label>
+          <mat-radio-group
+            aria-labelledby="q16"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q16">
+            <mat-radio-button class="radio-button" *ngFor="let op of op16" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 17">
+          <label id="q17">17. &nbsp; {{ question[16] }}</label>
+          <mat-radio-group
+            aria-labelledby="q17"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q17">
+            <mat-radio-button class="radio-button" *ngFor="let op of op17" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 18">
+          <label id="q18">18. &nbsp; {{ question[17] }}</label>
+          <mat-radio-group
+            aria-labelledby="q18"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q18">
+            <mat-radio-button class="radio-button" *ngFor="let op of op18" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 19">
+          <label id="q19">19. &nbsp; {{ question[18] }}</label>
+          <mat-radio-group
+            aria-labelledby="q19"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q19">
+            <mat-radio-button class="radio-button" *ngFor="let op of op19" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 20">
+          <label id="q20">20. &nbsp; {{ question[19] }}</label>
+          <mat-radio-group
+            aria-labelledby="q20"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q20">
+            <mat-radio-button class="radio-button" *ngFor="let op of op20" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 21">
+          <label id="q21">21. &nbsp; {{ question[20] }}</label>
+          <mat-radio-group
+            aria-labelledby="q21"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q21">
+            <mat-radio-button class="radio-button" *ngFor="let op of op21" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 22">
+          <label id="q22">22. &nbsp; {{ question[21] }}</label>
+          <mat-radio-group
+            aria-labelledby="q22"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q22">
+            <mat-radio-button class="radio-button" *ngFor="let op of op22" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 23">
+          <label id="q23">23. &nbsp; {{ question[22] }}</label>
+          <mat-radio-group
+            aria-labelledby="q23"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q23">
+            <mat-radio-button class="radio-button" *ngFor="let op of op23" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 24">
+          <label id="q24">24. &nbsp; {{ question[23] }}</label>
+          <mat-radio-group
+            aria-labelledby="q24"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q24">
+            <mat-radio-button class="radio-button" *ngFor="let op of op24" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 25">
+          <label id="q25">25. &nbsp; {{ question[24] }}</label>
+          <mat-radio-group
+            aria-labelledby="q25"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q25">
+            <mat-radio-button class="radio-button" *ngFor="let op of op25" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 26">
+          <label id="q26">26. &nbsp; {{ question[25] }}</label>
+          <mat-radio-group
+            aria-labelledby="q26"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q26">
+            <mat-radio-button class="radio-button" *ngFor="let op of op26" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 27">
+          <label id="q27">27. &nbsp; {{ question[26] }}</label>
+          <mat-radio-group
+            aria-labelledby="q27"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q27">
+            <mat-radio-button class="radio-button" *ngFor="let op of op27" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 28">
+          <label id="q28">28. &nbsp; {{ question[27] }}</label>
+          <mat-radio-group
+            aria-labelledby="q28"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q28">
+            <mat-radio-button class="radio-button" *ngFor="let op of op28" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 29">
+          <label id="q29">29. &nbsp; {{ question[28] }}</label>
+          <mat-radio-group
+            aria-labelledby="q29"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q29">
+            <mat-radio-button class="radio-button" *ngFor="let op of op29" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="question" *ngIf="currActive === 30">
+          <label id="q30">30. &nbsp; {{ question[29] }}</label>
+          <mat-radio-group
+            aria-labelledby="q30"
+            class="radio-group"
+            (change)="onChange()"
+            formControlName="q30">
+            <mat-radio-button class="radio-button" *ngFor="let op of op30" [value]="op">
+              &nbsp; {{op}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </form>
+    </div>
+    <div class="action-panel">
+      <div class="status-panel">
+        <div class="status-el">
+          <div class="status-circle-ans"></div>
+          <div class="status-name">Questions<br>Answered</div>
+          <div> &nbsp; {{ answeredCount }} </div>
+        </div>
+        <div class="status-el">
+          <div class="status-circle-unans"></div>
+          <div class="status-name">Not Answered</div>
+          <div> {{ unansweredCount }} </div>
+        </div>
+        <div class="status-el">
+          <div class="status-circle-unvis"></div>
+          <div class="status-name">Not Visited</div>
+          <div> {{ unvisitedCount }} </div>
+        </div>
+      </div>
+      <div class="button-panel">
+        <div class="btn-div-prev">
+          <button [disabled]="currActive === 1" class="btn-style" mat-raised-button color="primary" (click)="onPrev()">Prev.</button>
+        </div>
+        <div class="btn-div-next">
+          <button [disabled]="currActive === 30" class="btn-style" mat-raised-button color="primary" (click)="onNext()">Next</button>
+        </div>
+        <div class="btn-div-clear">
+          <button [disabled]="!answered[currActive-1]" class="btn-style" mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+        <div class="btn-div-submit">
+          <button [disabled]="(unvisitedCount !== 0 || !isSubmitAppears)" class="btn-style color-allow" mat-raised-button (click)="onSubmit()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

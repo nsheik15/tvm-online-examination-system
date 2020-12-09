@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Instructions</h2>
+<mat-dialog-content class="mat-typography">
+  <p>Total Duration: <span class="bold">30m</span></p>
+  <ul class="top-padding">
+    <li>Attend All the Questions.</li>
+    <br>
+    <li>Each question carries one mark, there is no negative mark.</li>
+    <br>
+    <li>Use Next, Prev buttons or Keyboard Arrow keys or the question panel to navigate between questions.</li>
+    <br>
+    <li>Click on radio button options, to answer the question.</li>
+    <br>
+    <li>Use clear button to clear the answered questions.</li>
+    <br>
+    <li>Do not press back or refresh button.</li>
+    <br>
+    <li>Do not close the browser tab or window, until the exam is over.</li>
+    <br>
+    <li>To Submit the test, click on Submit button.</li>
+    <br>
+    <li>Submit button is visible only after all the questions are visited.</li>
+    <br>
+    <li>Submit button is visible only at last 5m of Examination.</li>
+  </ul>
+  <p class="top-padding">All the Best!!</p>
+</mat-dialog-content>
+<mat-dialog-actions align=end>
+  <button mat-button [mat-dialog-close]="true" mat-dialog-close color="accent">Cancel</button>
+  <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial color="primary" (click)="onStart()">Let's Begin</button>
+</mat-dialog-actions>

@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Confirmation</h2>
+<mat-dialog-content class="mat-typography">
+  <p class="pad-top">Make sure you have attended all the questions.</p>
+  <p class="pad-top">Are you sure, you want to submit?</p>
+</mat-dialog-content>
+<mat-dialog-actions align=end>
+  <button mat-button [mat-dialog-close]="true" mat-dialog-close color="accent">Cancel</button>
+  <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial color="primary" (click)="onSubmit()">Submit</button>
+</mat-dialog-actions>
