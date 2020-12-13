@@ -4,6 +4,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import arrayShuffle from 'array-shuffle';
 
 @Component({
   selector: 'exam-panel',
@@ -104,41 +105,43 @@ export class PanelComponent implements OnInit {
   unansweredCount = 0;
   isSubmit = false;
   isSubmitAppears = false;
+  shuffledQuestion: any;/*
+  testCode = 'enum Season{\n\tWINTER,SPRING,SUMMER;\n };\n System.out.println(Season.SPRING.ordinal());'; */
 
   question = [
-    'Why we use array as a parameter of main method?',
-    'Can we declare abstract static method?',
-    'Which of these is necessary condition for automatic type conversion in Java?',
-    'What is the prototype of the default constructor of this Java class?',
-    'Floating-point value assigned to an integer type?',
-    'Which component is responsible to optimize byte code into machine code?',
-    'Invalid identifier with main method is?',
-    'What is the extension of compiled java classes?',
-    'Which keyword is used for a class which has been declared final?',
-    'If we remove static modifier from main method of the program what is the output of the program?',
-    'Which of the following is wrong sentence to unreferenced the object?',
-    'What will be the output of the following code?',
-    'By default except static method all the methods in java is?',
-    'Which interface is control over serialization and deserialization?',
-    'Which of the following has the highest memory management',
-    'When a class extends the Thread class, it should override ………………… method of thread class to start that thread.',
-    'Which of the following constructor of class Thread is valid one?',
-    'How does java enables high performance?',
-    'Which keyword references other classes in java?',
-    'Select invalid method of string class?',
-    'Can we print or execute something without using main method?',
-    'Which of the following statement is wrong?',
-    'Which one is the name of memory location?',
-    'Inter-thread communication is used to avoid thread pooling?',
-    'Which method is used to mark the thread daemon thread or a user thread?',
-    'Which is the base class of all java classes?',
-    'Can an interface implement another interface?',
-    'An Interface which doesn’t have any declaration inside but enforces a mechanism?',
-    'Method which is implemented in a language other than java is?',
-    '	……………………  is used to find and fix bugs in the java program?'
+    ['Why we use array as a parameter of main method?', ['It is syntax', 'It can store multiple values', 'Both of above ', 'None of above'], 'q1'],
+    ['Can we declare abstract static method?', ['Yes', 'No'], 'q2'],
+    ['Which of these is necessary condition for automatic type conversion in Java?', ['The destination type is smaller than source type', 'The destination type is larger than source type', 'The destination type can be larger or smaller than source type', 'None of the mentioned'], 'q3'],
+    ['What is the prototype of the default constructor of this Java class?', ['prototype( )', 'prototype(void)', 'public prototype(void)', 'public prototype( )'], 'q4'],
+    ['Floating-point value assigned to an integer type?', ['Type Convention', 'Cascading', 'Truncation', 'Wrapping'], 'q5'],
+    ['Which component is responsible to optimize byte code into machine code?', ['JVM', 'JRE', 'JDK', 'JIT'], 'q6'],
+    ['Invalid identifier with main method is?', ['Static', 'Default', 'Private', 'protected'], 'q7'],
+    ['What is the extension of compiled java classes?', ['.js', '.text', '.java', '.class'], 'q8'],
+    ['Which keyword is used for a class which has been declared final?', ['Final', 'Static', 'Abstract'], 'q9'],
+    ['If we remove static modifier from main method of the program what is the output of the program?', ['Compilation error', 'Program runs fine', 'No Such Method Error', 'None of the above'], 'q10'],
+    ['Which of the following is wrong sentence to unreferenced the object?', ['By nulling the reference', 'By assigning one reference to another ', 'By Using Object.newInstance() method', 'By anonymous Object method'], 'q11'],
+    ['What will be the output of the following code?', ['1', '0', 'Compilation Error', 'EnumNotDefeinedException'], 'q12', 'enum Season{\n\tWINTER,SPRING,SUMMER;\n };\n System.out.println(Season.SPRING.ordinal());'],
+    ['By default except static method all the methods in java is?', ['Default methods', 'Public methods', 'Virtual methods', 'Instance methods'], 'q13'],
+    ['Which interface is control over serialization and deserialization?', ['FileFilter', 'Serializable', 'Externalization', 'ObjectInput'], 'q14'],
+    ['Which of the following has the highest memory management', ['Heap', 'Java Virtual Machine', 'Stack Memory', 'String constant pool'], 'q15'],
+    ['When a class extends the Thread class, it should override ………………… method of thread class to start that thread.', ['start()', 'run()', 'init()', 'go()'], 'q16'],
+    ['Which of the following constructor of class Thread is valid one?', ['Thread(Runnable threadobject, int priority)', 'Thread(init priority)', 'Thread(Runnable threadObject, String threadName)', 'Thread(String threadName, int priority)', 'None of these'], 'q17'],
+    ['How does java enables high performance?', ['Using Java Virtual Machine', 'Using Just In Time Compiler', 'Using  Java Development Kit', 'None of the above'], 'q18'],
+    ['Which keyword references other classes in java?', ['implements', 'extends', 'import', 'interface'], 'q19'],
+    ['Select invalid method of string class?', ['toUpperCase()', 'toLowerCase()', 'equalsIgnore()', 'None of the above'], 'q20'],
+    ['Can we print or execute something without using main method?', ['Yes', 'No'], 'q21'],
+    ['Which of the following statement is wrong?', ['Interface has only static and final variables', 'Abstract class can have static methods main method and constructor', 'Abstract class support multiple inheritance by default', 'Interface have only abstract methods'], 'q22'],
+    ['Which one is the name of memory location?', ['Heap memory', 'Static container', 'Variable', 'JVM'], 'q23'],
+    ['Inter-thread communication is used to avoid thread pooling?', ['True', 'False'], 'q24'],
+    ['Which method is used to mark the thread daemon thread or a user thread?', ['isDaemon()', 'setDaemon()', 'daemon()', 'createDaemon()'], 'q25'],
+    ['Which is the base class of all java classes?', ['java.object', 'java.lang.object', 'java.utill', 'java.class.object'], 'q26'],
+    ['Can an interface implement another interface?', ['Yes', 'No'], 'q27'],
+    ['An Interface which doesn’t have any declaration inside but enforces a mechanism?', ['Nested interface', 'Multiple Interface', 'Marker Interface', 'None of the above'], 'q28'],
+    ['Method which is implemented in a language other than java is?', ['Static methods', 'Default methods', 'Native methods', 'None of the above'], 'q29'],
+    ['	……………………  is used to find and fix bugs in the java program?', ['JVM', 'JRE', 'JDK', 'JDB'], 'q30']
   ];
 
-  op1 = ['It is syntax', 'It can store multiple values', 'Both of above ', 'None of above'];
+  /* op1 = ['It is syntax', 'It can store multiple values', 'Both of above ', 'None of above'];
   op2 = ['Yes', 'No'];
   op3 = ['The destination type is smaller than source type', 'The destination type is larger than source type', 'The destination type can be larger or smaller than source type', 'None of the mentioned'];
   op4 = ['prototype( )', 'prototype(void)', 'public prototype(void)', 'public prototype( )'];
@@ -167,7 +170,7 @@ export class PanelComponent implements OnInit {
   op27 = ['Yes', 'No'];
   op28 = ['Nested interface', 'Multiple Interface', 'Marker Interface', 'None of the above'];
   op29 = ['Static methods', 'Default methods', 'Native methods', 'None of the above'];
-  op30 = ['JVM', 'JRE', 'JDK', 'JDB'];
+  op30 = ['JVM', 'JRE', 'JDK', 'JDB']; */
 
   get q1() {
     return this.questionForm.get('q1');
@@ -328,7 +331,41 @@ export class PanelComponent implements OnInit {
       let ansObj = JSON.parse(ansVal);
 
       this.questionForm.setValue(ansObj);
-    }
+    }/*
+
+    console.log('Test Code: \n', this.testCode); */
+
+    this.shuffledQuestion = arrayShuffle(this.question);
+    this.shuffledQuestion[0][1] = arrayShuffle(this.shuffledQuestion[0][1]);
+    this.shuffledQuestion[1][1] = arrayShuffle(this.shuffledQuestion[1][1]);
+    this.shuffledQuestion[2][1] = arrayShuffle(this.shuffledQuestion[2][1]);
+    this.shuffledQuestion[3][1] = arrayShuffle(this.shuffledQuestion[3][1]);
+    this.shuffledQuestion[4][1] = arrayShuffle(this.shuffledQuestion[4][1]);
+    this.shuffledQuestion[5][1] = arrayShuffle(this.shuffledQuestion[5][1]);
+    this.shuffledQuestion[6][1] = arrayShuffle(this.shuffledQuestion[6][1]);
+    this.shuffledQuestion[7][1] = arrayShuffle(this.shuffledQuestion[7][1]);
+    this.shuffledQuestion[8][1] = arrayShuffle(this.shuffledQuestion[8][1]);
+    this.shuffledQuestion[9][1] = arrayShuffle(this.shuffledQuestion[9][1]);
+    this.shuffledQuestion[10][1] = arrayShuffle(this.shuffledQuestion[10][1]);
+    this.shuffledQuestion[11][1] = arrayShuffle(this.shuffledQuestion[11][1]);
+    this.shuffledQuestion[12][1] = arrayShuffle(this.shuffledQuestion[12][1]);
+    this.shuffledQuestion[13][1] = arrayShuffle(this.shuffledQuestion[13][1]);
+    this.shuffledQuestion[14][1] = arrayShuffle(this.shuffledQuestion[14][1]);
+    this.shuffledQuestion[15][1] = arrayShuffle(this.shuffledQuestion[15][1]);
+    this.shuffledQuestion[16][1] = arrayShuffle(this.shuffledQuestion[16][1]);
+    this.shuffledQuestion[17][1] = arrayShuffle(this.shuffledQuestion[17][1]);
+    this.shuffledQuestion[18][1] = arrayShuffle(this.shuffledQuestion[18][1]);
+    this.shuffledQuestion[19][1] = arrayShuffle(this.shuffledQuestion[19][1]);
+    this.shuffledQuestion[20][1] = arrayShuffle(this.shuffledQuestion[20][1]);
+    this.shuffledQuestion[21][1] = arrayShuffle(this.shuffledQuestion[21][1]);
+    this.shuffledQuestion[22][1] = arrayShuffle(this.shuffledQuestion[22][1]);
+    this.shuffledQuestion[23][1] = arrayShuffle(this.shuffledQuestion[23][1]);
+    this.shuffledQuestion[24][1] = arrayShuffle(this.shuffledQuestion[24][1]);
+    this.shuffledQuestion[25][1] = arrayShuffle(this.shuffledQuestion[25][1]);
+    this.shuffledQuestion[26][1] = arrayShuffle(this.shuffledQuestion[26][1]);
+    this.shuffledQuestion[27][1] = arrayShuffle(this.shuffledQuestion[27][1]);
+    this.shuffledQuestion[28][1] = arrayShuffle(this.shuffledQuestion[28][1]);
+    this.shuffledQuestion[29][1] = arrayShuffle(this.shuffledQuestion[29][1]);
 
     setInterval(() => {
       if (!this.isSubmitAppears) {

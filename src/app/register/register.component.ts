@@ -4,7 +4,8 @@ import { MyErrorStateMatcher } from './my-error-state-matcher';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';/*
+import arrayShuffle from 'array-shuffle'; */
 
 @Component({
   selector: 'exam-register',
@@ -25,7 +26,7 @@ export class RegisterComponent implements OnInit {
     3,
     4,
     5,
-    5,
+    6,
     7,
     8
   ];
@@ -98,6 +99,9 @@ export class RegisterComponent implements OnInit {
 
       this.registrationForm.setValue(formObject);
     }
+
+    /* const shuffled = arrayShuffle(this.semesterList);
+    console.log(shuffled); */
 
   }
 
