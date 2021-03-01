@@ -421,6 +421,7 @@ export class PanelComponent implements OnInit {
   }
 
   onQuestionChange(number: any) {
+
     if(number === 1) {
       this.setVisitedAnswered();
       this.currActive = 1;
@@ -630,6 +631,7 @@ export class PanelComponent implements OnInit {
       this.findUnvisitedCount();
       this.active[this.currActive - 1] = true;
     }
+
   }
 
   onNext() {
@@ -647,123 +649,124 @@ export class PanelComponent implements OnInit {
   }
 
   onClear() {
-    if (this.currActive === 1) {
+    let selectedQuestion = this.shuffledQuestion[this.currActive-1][2];
+    if (selectedQuestion === 'q1') {
       this.questionForm.patchValue({
         q1: '',
       });
-    } else if (this.currActive === 2) {
+    } else if (selectedQuestion === 'q2') {
       this.questionForm.patchValue({
         q2: '',
       });
-    } else if (this.currActive === 3) {
+    } else if (selectedQuestion === 'q3') {
       this.questionForm.patchValue({
         q3: '',
       });
-    } else if (this.currActive === 4) {
+    } else if (selectedQuestion === 'q4') {
       this.questionForm.patchValue({
         q4: '',
       });
-    } else if (this.currActive === 5) {
+    } else if (selectedQuestion === 'q5') {
       this.questionForm.patchValue({
         q5: '',
       });
-    } else if (this.currActive === 6) {
+    } else if (selectedQuestion === 'q6') {
       this.questionForm.patchValue({
         q6: '',
       });
-    } else if (this.currActive === 7) {
+    } else if (selectedQuestion === 'q7') {
       this.questionForm.patchValue({
         q7: '',
       });
-    } else if (this.currActive === 8) {
+    } else if (selectedQuestion === 'q8') {
       this.questionForm.patchValue({
         q8: '',
       });
-    } else if (this.currActive === 9) {
+    } else if (selectedQuestion === 'q9') {
       this.questionForm.patchValue({
         q9: '',
       });
-    } else if (this.currActive === 10) {
+    } else if (selectedQuestion === 'q10') {
       this.questionForm.patchValue({
         q10: '',
       });
-    } else if (this.currActive === 11) {
+    } else if (selectedQuestion === 'q11') {
       this.questionForm.patchValue({
         q11: '',
       });
-    } else if (this.currActive === 12) {
+    } else if (selectedQuestion === 'q12') {
       this.questionForm.patchValue({
         q12: '',
       });
-    } else if (this.currActive === 13) {
+    } else if (selectedQuestion === 'q13') {
       this.questionForm.patchValue({
         q13: '',
       });
-    } else if (this.currActive === 14) {
+    } else if (selectedQuestion === 'q14') {
       this.questionForm.patchValue({
         q14: '',
       });
-    } else if (this.currActive === 15) {
+    } else if (selectedQuestion === 'q15') {
       this.questionForm.patchValue({
         q15: '',
       });
-    } else if (this.currActive === 16) {
+    } else if (selectedQuestion === 'q16') {
       this.questionForm.patchValue({
         q16: '',
       });
-    } else if (this.currActive === 17) {
+    } else if (selectedQuestion === 'q17') {
       this.questionForm.patchValue({
         q17: '',
       });
-    } else if (this.currActive === 18) {
+    } else if (selectedQuestion === 'q18') {
       this.questionForm.patchValue({
         q18: '',
       });
-    } else if (this.currActive === 19) {
+    } else if (selectedQuestion === 'q19') {
       this.questionForm.patchValue({
         q19: '',
       });
-    } else if (this.currActive === 20) {
+    } else if (selectedQuestion === 'q20') {
       this.questionForm.patchValue({
         q20: '',
       });
-    } else if (this.currActive === 21) {
+    } else if (selectedQuestion === 'q21') {
       this.questionForm.patchValue({
         q21: '',
       });
-    } else if (this.currActive === 22) {
+    } else if (selectedQuestion === 'q22') {
       this.questionForm.patchValue({
         q22: '',
       });
-    } else if (this.currActive === 23) {
+    } else if (selectedQuestion === 'q23') {
       this.questionForm.patchValue({
         q23: '',
       });
-    } else if (this.currActive === 24) {
+    } else if (selectedQuestion === 'q24') {
       this.questionForm.patchValue({
         q24: '',
       });
-    } else if (this.currActive === 25) {
+    } else if (selectedQuestion === 'q25') {
       this.questionForm.patchValue({
         q25: '',
       });
-    } else if (this.currActive === 26) {
+    } else if (selectedQuestion === 'q26') {
       this.questionForm.patchValue({
         q26: '',
       });
-    } else if (this.currActive === 27) {
+    } else if (selectedQuestion === 'q27') {
       this.questionForm.patchValue({
         q27: '',
       });
-    } else if (this.currActive === 28) {
+    } else if (selectedQuestion === 'q28') {
       this.questionForm.patchValue({
         q28: '',
       });
-    } else if (this.currActive === 29) {
+    } else if (selectedQuestion === 'q29') {
       this.questionForm.patchValue({
         q29: '',
       });
-    } else if (this.currActive === 30) {
+    } else if (selectedQuestion === 'q30') {
       this.questionForm.patchValue({
         q30: '',
       });
@@ -772,8 +775,14 @@ export class PanelComponent implements OnInit {
     this.answered[this.currActive - 1] = false;
   }
 
-  onChange() {
-    this.answered[this.currActive - 1] = true;
+  onChange(value: string) {
+    console.log(value);
+    if(value === '') {
+      this.answered[this.currActive - 1] = false;
+      console.log(value);
+    } else {
+      this.answered[this.currActive - 1] = true;
+    }
     this.submitService.onAnswerSubmit(this.questionForm.value);
   }
 

@@ -19,6 +19,15 @@ $background-color: #424242;
   width: 25%;
   box-shadow: 5px 0 6px -6px black;
 }
+.side-nav-mobile {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  align-items: center;
+  height: auto;
+  width: 80%;
+  box-shadow: 5px 0 6px -6px black;
+}
 .main-bar {
   display: flex;
   flex-direction: column;
@@ -42,6 +51,7 @@ $background-color: #424242;
   align-items: center;
 }
 .action-panel {
+  display: flex;
   box-sizing: border-box;
   width: 100%;
   height: 20%;
@@ -92,6 +102,22 @@ $background-color: #424242;
   grid-template-columns: auto auto auto auto;
   transform: translate(12px, 0);
 }
+.align-grid {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+}
+.side-nav-grid-mobile {
+  display: grid;
+  box-sizing: border-box;
+  width: 80%;
+  height: 90%;
+  grid-template-columns: auto auto auto auto;
+  transform: translate(12px, 0);
+}
 .question-no {
   display: flex;
   box-sizing: border-box;
@@ -119,7 +145,7 @@ $background-color: #424242;
   background-color: $allow;
 }
 form {
-  width: 90%;
+  width: 95%;
   height: 100%;
 }
 .question {
@@ -127,6 +153,7 @@ form {
   flex-direction: column;
   box-sizing: border-box;
   margin-top: 50px;
+  margin-left: 20px;
   font-size: 20px;
 }
 .question>label {
@@ -140,16 +167,19 @@ form {
 .radio-button {
   margin: 10px;
 }
-.action-panel {
-  display: flex;
-  box-sizing: border-box;
-}
 .status-panel {
   display: flex;
   flex-direction: row;
   box-sizing: border-box;
   width: 50%;
   height: 100%;
+}
+.status-panel-mobile {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  align-items: center;
+  width: 100%;
 }
 .button-panel {
   display: grid;
@@ -162,7 +192,7 @@ form {
 .btn-style {
   display: flex;
   box-sizing: border-box;
-  width: 230px;
+  width: 90%;
   height: 45px;
   align-items: center;
   justify-content: center;
@@ -197,6 +227,15 @@ form {
   justify-content: center;
   width: 100%;
   height: 100%;
+}
+.status-el-mobile {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: start;
+  width: 150px;
+  height: 50px;
 }
 .status-circle-ans {
   display: flex;
@@ -233,20 +272,65 @@ form {
 }
 code {
   white-space: pre-wrap;
+  word-wrap: break-word;
 }
 .code-div {
   position: absolute;
-  right: -120px;
+  right: 0;
   padding-left: 40px;
   background-color: #000;
-  width: 550px;
+  font-size: 16px;
+  line-height: 30px;
+  width: 50%;
   height: auto;
   box-sizing: border-box;
-  transform: scale(0.7, 0.7);
-  transform-origin: 0 0;
-  margin-top: 20px;
 }
 .code-container {
   position: relative;
-  transform-origin: 0 0;
+}
+
+@media (max-width: 1124px) {
+  .side-nav {
+    display: none;
+  }
+  .title {
+    width: 100vw;
+  }
+  .action-panel {
+    width: 100vw;
+  }
+  .status-panel {
+    display: none;
+  }
+  .button-panel {
+    width: 100%;
+  }
+  .question-panel {
+    width: 100vw;
+  }
+}
+
+@media (max-width: 669px) {
+  .question {
+    font-size: 18px;
+  }
+  .question>label {
+    line-height: 34px;
+  }
+}
+
+@media (max-width: 769px) {
+  .code-div {
+    position: relative;
+    margin-top: 20px;
+    right: 0;
+    width: 100%;
+  }
+  .wrap-mat-label {
+    white-space: normal;
+    line-height: 26px;
+  }
+  .question-panel {
+    overflow-y: scroll;
+  }
 }

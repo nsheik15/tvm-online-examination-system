@@ -35,14 +35,15 @@ form {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  width: 50%;
-  height: 100%;
+  width: 100%;
+  height: auto;
   align-items: center;
   transform: translate(0, -10px);
 }
 .form-fields {
   box-sizing: border-box;
   width: 60%;
+  min-width: 260px;
   margin-top: 20px;
 }
 .dob {
@@ -90,4 +91,11 @@ form {
 h2 {
   color: rgb(223, 223, 223);
   text-shadow: 1px 1px 1px #000;
+}
+
+
+@media (max-width: 669px) {
+  .page {
+    padding-bottom: 40px;
+  }
 }

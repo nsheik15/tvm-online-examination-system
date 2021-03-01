@@ -1,5 +1,5 @@
-<div class="div-container">
-  <div class="side-nav">
+<mat-sidenav-container class="div-container">
+  <mat-sidenav #sidenav mode="over" class="side-nav-mobile">
     <div class="side-nav-title">
       <h2>Question Panel</h2>
       <div class="title-underline">
@@ -9,672 +9,109 @@
       </div>
     </div>
 
-    <div class="side-nav-grid">
-      <div *ngFor="let no of questionNo; let i = index" (click)="onQuestionChange(no)" class="question-no" [ngClass]="{'active': active[i], 'visited': visited[i], 'answered': answered[i]}">{{no}}</div>
+    <div class="align-grid">
+      <div class="side-nav-grid-mobile">
+        <div *ngFor="let no of questionNo; let i = index" (click)="onQuestionChange(no); sidenav.toggle()" class="question-no" [ngClass]="{'active': active[i], 'visited': visited[i], 'answered': answered[i]}">{{no}}</div>
+      </div>
     </div>
-  </div>
-  <div class="main-bar">
-    <div class="title">
-      <exam-title></exam-title>
-    </div>
-    <div class="question-panel">
-      <form [formGroup]="questionForm">
 
-        <div *ngFor="let no of questionNo; let i = index">
-          <div class="question" *ngIf="currActive === no">
-            <label [id]="'q'+no">
-              {{no}}. &nbsp; {{ shuffledQuestion[i][0] }}
-              <div class="code-container">
-                <div *ngIf="shuffledQuestion[i][3]" class="code-div">
-                  <code>{{shuffledQuestion[i][3]}}</code>
+    <div class="status-panel-mobile">
+      <div class="status-el-mobile">
+        <div class="status-circle-ans"></div>
+        <div class="status-name">Questions<br>Answered</div>
+        <div> &nbsp; {{ answeredCount }} </div>
+      </div>
+      <div class="status-el-mobile">
+        <div class="status-circle-unans"></div>
+        <div class="status-name">Not Answered</div>
+        <div> {{ unansweredCount }} </div>
+      </div>
+      <div class="status-el-mobile">
+        <div class="status-circle-unvis"></div>
+        <div class="status-name">Not Visited</div>
+        <div> {{ unvisitedCount }} </div>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="div-container">
+    <div class="side-nav">
+      <div class="side-nav-title">
+        <h2>Question Panel</h2>
+        <div class="title-underline">
+          <div class="title-circle-left"></div>
+          <div class="title-line"></div>
+          <div class="title-circle-right"></div>
+        </div>
+      </div>
+
+      <div class="side-nav-grid">
+        <div *ngFor="let no of questionNo; let i = index" (click)="onQuestionChange(no)" class="question-no" [ngClass]="{'active': active[i], 'visited': visited[i], 'answered': answered[i]}">{{no}}</div>
+      </div>
+    </div>
+    <div class="main-bar">
+      <div class="title">
+        <exam-title (navEmitter)="sidenav.toggle()"></exam-title>
+      </div>
+      <div class="question-panel">
+        <form [formGroup]="questionForm">
+
+          <div *ngFor="let no of questionNo; let i = index">
+            <div class="question" *ngIf="currActive === no">
+              <label [id]="'q'+no">
+                {{no}}. &nbsp; {{ shuffledQuestion[i][0] }}
+                <div *ngIf="shuffledQuestion[i][3]" class="code-container">
+                  <div #codeDiv class="code-div">
+                    <code>{{shuffledQuestion[i][3]}}</code>
+                  </div>
                 </div>
-              </div>
-            </label>
-            <mat-radio-group
-              class="radio-group"
-              (change)="onChange()"
-              [formControlName]="shuffledQuestion[i][2]">
-              <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[i][1]" [value]="op">
-                &nbsp; {{op}}
-              </mat-radio-button>
-            </mat-radio-group>
+              </label>
+              <mat-radio-group
+                class="radio-group"
+                (change)="onChange(this.questionForm.get(shuffledQuestion[i][2])?.value)"
+                [formControlName]="shuffledQuestion[i][2]">
+                <mat-radio-button [checked]="this.questionForm.get(shuffledQuestion[i][2])?.value === op" class="radio-button" *ngFor="let op of shuffledQuestion[i][1]" [value]="op">
+                  <span class="wrap-mat-label">&nbsp; {{op}}</span>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="action-panel">
+        <div class="status-panel">
+          <div class="status-el">
+            <div class="status-circle-ans"></div>
+            <div class="status-name">Questions<br>Answered</div>
+            <div> &nbsp; {{ answeredCount }} </div>
+          </div>
+          <div class="status-el">
+            <div class="status-circle-unans"></div>
+            <div class="status-name">Not Answered</div>
+            <div> {{ unansweredCount }} </div>
+          </div>
+          <div class="status-el">
+            <div class="status-circle-unvis"></div>
+            <div class="status-name">Not Visited</div>
+            <div> {{ unvisitedCount }} </div>
           </div>
         </div>
-
-        <!-- <div class="question" *ngIf="currActive === 1">
-          <label id="q1">
-            1. &nbsp; {{ shuffledQuestion[0][0] }}
-            <div *ngIf="shuffledQuestion[0][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[0][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q1"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[0][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[0][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 2">
-          <label id="q2">
-            2. &nbsp; {{ shuffledQuestion[1][0] }}
-            <div *ngIf="shuffledQuestion[1][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[1][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q2"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[1][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[1][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 3">
-          <label id="q3">
-            3. &nbsp; {{ shuffledQuestion[2][0] }}
-            <div *ngIf="shuffledQuestion[2][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[2][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q3"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[2][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[2][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 4">
-          <label id="q4">
-            4. &nbsp; {{ shuffledQuestion[3][0] }}
-            <div *ngIf="shuffledQuestion[3][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[3][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q4"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[3][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[3][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 5">
-          <label id="q5">
-            5. &nbsp; {{ shuffledQuestion[4][0] }}
-            <div *ngIf="shuffledQuestion[4][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[4][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q5"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[4][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[4][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 6">
-          <label id="q6">
-            6. &nbsp; {{ shuffledQuestion[5][0] }}
-            <div *ngIf="shuffledQuestion[5][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[5][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q6"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[5][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[5][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 7">
-          <label id="q7">
-            7. &nbsp; {{ shuffledQuestion[6][0] }}
-            <div *ngIf="shuffledQuestion[6][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[6][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q7"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[6][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[6][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 8">
-          <label id="q8">
-            8. &nbsp; {{ shuffledQuestion[7][0] }}
-            <div *ngIf="shuffledQuestion[7][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[7][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q8"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[7][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[7][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 9">
-          <label id="q9">
-            9. &nbsp; {{ shuffledQuestion[8][0] }}
-            <div *ngIf="shuffledQuestion[8][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[8][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q9"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[8][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[8][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 10">
-          <label id="q10">
-            10. &nbsp; {{ shuffledQuestion[9][0] }}
-            <div *ngIf="shuffledQuestion[9][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[9][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q10"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[9][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[9][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 11">
-          <label id="q11">
-            11. &nbsp; {{ shuffledQuestion[10][0] }}
-            <div *ngIf="shuffledQuestion[10][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[10][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q11"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[10][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[10][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 12">
-          <label id="q12">
-            12. &nbsp; {{ shuffledQuestion[11][0] }}
-            <div *ngIf="shuffledQuestion[11][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[11][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q12"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[11][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[11][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 13">
-          <label id="q13">
-            13. &nbsp; {{ shuffledQuestion[12][0] }}
-            <div *ngIf="shuffledQuestion[12][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[12][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q13"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[12][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[12][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 14">
-          <label id="q14">
-            14. &nbsp; {{ shuffledQuestion[13][0] }}
-            <div *ngIf="shuffledQuestion[13][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[13][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q14"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[13][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[13][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 15">
-          <label id="q15">
-            15. &nbsp; {{ shuffledQuestion[14][0] }}
-            <div *ngIf="shuffledQuestion[14][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[14][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q15"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[14][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[14][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 16">
-          <label id="q16">
-            16. &nbsp; {{ shuffledQuestion[15][0] }}
-            <div *ngIf="shuffledQuestion[15][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[15][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q16"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[15][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[15][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 17">
-          <label id="q17">
-            17. &nbsp; {{ shuffledQuestion[16][0] }}
-            <div *ngIf="shuffledQuestion[16][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[16][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q17"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[16][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[16][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 18">
-          <label id="q18">
-            18. &nbsp; {{ shuffledQuestion[17][0] }}
-            <div *ngIf="shuffledQuestion[17][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[17][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q18"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[17][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[17][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 19">
-          <label id="q19">
-            19. &nbsp; {{ shuffledQuestion[18][0] }}
-            <div *ngIf="shuffledQuestion[18][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[18][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q19"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[18][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[18][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 20">
-          <label id="q20">
-            20. &nbsp; {{ shuffledQuestion[19][0] }}
-            <div *ngIf="shuffledQuestion[19][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[19][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q20"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[19][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[19][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 21">
-          <label id="q21">
-            21. &nbsp; {{ shuffledQuestion[20][0] }}
-            <div *ngIf="shuffledQuestion[20][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[20][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q21"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[20][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[20][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 22">
-          <label id="q22">
-            22. &nbsp; {{ shuffledQuestion[21][0] }}
-            <div *ngIf="shuffledQuestion[21][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[21][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q22"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[21][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[21][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 23">
-          <label id="q23">
-            23. &nbsp; {{ shuffledQuestion[22][0] }}
-            <div *ngIf="shuffledQuestion[22][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[22][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q23"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[22][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[22][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 24">
-          <label id="q24">
-            24. &nbsp; {{ shuffledQuestion[23][0] }}
-            <div *ngIf="shuffledQuestion[23][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[23][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q24"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[23][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[23][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 25">
-          <label id="q25">
-            25. &nbsp; {{ shuffledQuestion[24][0] }}
-            <div *ngIf="shuffledQuestion[24][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[24][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q25"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[24][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[24][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 26">
-          <label id="q26">
-            26. &nbsp; {{ shuffledQuestion[25][0] }}
-            <div *ngIf="shuffledQuestion[25][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[25][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q26"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[25][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[25][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 27">
-          <label id="q27">
-            27. &nbsp; {{ shuffledQuestion[26][0] }}
-            <div *ngIf="shuffledQuestion[26][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[26][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q27"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[26][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[26][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 28">
-          <label id="q28">
-            28. &nbsp; {{ shuffledQuestion[27][0] }}
-            <div *ngIf="shuffledQuestion[27][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[27][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q28"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[27][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[27][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 29">
-          <label id="q29">
-            29. &nbsp; {{ shuffledQuestion[28][0] }}
-            <div *ngIf="shuffledQuestion[28][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[28][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q29"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[28][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[28][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div class="question" *ngIf="currActive === 30">
-          <label id="q30">
-            30. &nbsp; {{ shuffledQuestion[29][0] }}
-            <div *ngIf="shuffledQuestion[29][3]" class="code-div">
-              <code>
-                {{ shuffledQuestion[29][3] }}
-              </code>
-            </div>
-          </label>
-          <mat-radio-group
-            aria-labelledby="q30"
-            class="radio-group"
-            (change)="onChange()"
-            [formControlName]="shuffledQuestion[29][2]">
-            <mat-radio-button class="radio-button" *ngFor="let op of shuffledQuestion[29][1]" [value]="op">
-              &nbsp; {{op}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div> -->
-
-      </form>
-    </div>
-    <div class="action-panel">
-      <div class="status-panel">
-        <div class="status-el">
-          <div class="status-circle-ans"></div>
-          <div class="status-name">Questions<br>Answered</div>
-          <div> &nbsp; {{ answeredCount }} </div>
-        </div>
-        <div class="status-el">
-          <div class="status-circle-unans"></div>
-          <div class="status-name">Not Answered</div>
-          <div> {{ unansweredCount }} </div>
-        </div>
-        <div class="status-el">
-          <div class="status-circle-unvis"></div>
-          <div class="status-name">Not Visited</div>
-          <div> {{ unvisitedCount }} </div>
-        </div>
-      </div>
-      <div class="button-panel">
-        <div class="btn-div-prev">
-          <button [disabled]="currActive === 1" class="btn-style" mat-raised-button color="primary" (click)="onPrev()">Prev.</button>
-        </div>
-        <div class="btn-div-next">
-          <button [disabled]="currActive === 30" class="btn-style" mat-raised-button color="primary" (click)="onNext()">Next</button>
-        </div>
-        <div class="btn-div-clear">
-          <button [disabled]="!answered[currActive-1]" class="btn-style" mat-raised-button color="warn" (click)="onClear()">Clear</button>
-        </div>
-        <div class="btn-div-submit">
-          <button [disabled]="(unvisitedCount !== 0 || !isSubmitAppears)" class="btn-style color-allow" mat-raised-button (click)="onSubmit()">Submit</button>
+        <div class="button-panel">
+          <div class="btn-div-prev">
+            <button [disabled]="currActive === 1" class="btn-style" mat-raised-button color="primary" (click)="onPrev()">Prev.</button>
+          </div>
+          <div class="btn-div-next">
+            <button [disabled]="currActive === 30" class="btn-style" mat-raised-button color="primary" (click)="onNext()">Next</button>
+          </div>
+          <div class="btn-div-clear">
+            <button [disabled]="!answered[currActive-1]" class="btn-style" mat-raised-button color="warn" (click)="onClear()">Clear</button>
+          </div>
+          <div class="btn-div-submit">
+            <button [disabled]="(unvisitedCount !== 0 || !isSubmitAppears)" class="btn-style color-allow" mat-raised-button (click)="onSubmit()">Submit</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

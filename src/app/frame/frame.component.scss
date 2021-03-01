@@ -10,8 +10,16 @@
 .card-dimension {
   position: absolute;
   box-sizing: border-box;
-  width: 1350px;
-  height: 700px;
+  width: 90%;
+  height: 95%;
   border-radius: 0;
   padding: 0;
+}
+
+@media (max-width: 1124px) {
+  .card-dimension {
+    width: 100%;
+    height: 100vh;
+    overflow-y: scroll;
+  }
 }

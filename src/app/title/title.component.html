@@ -1,8 +1,19 @@
 <div class="div-container">
-  <div class="div-logo"><img src="./../../assets/TVM_LOGO.png" alt=""></div>
+  <div class="div-logo">
+    <div *ngIf="currentRoute === '/test'" class="left-div-mobile">
+      <div class="div-val-mobile">Welcome {{ user }}!</div>
+      <div class="div-val-mobile">Time: {{ time | date:"HH:mm:ss" }}</div>
+    </div>
+    <img src="./../../assets/TVM_LOGO.png" alt="">
+    <div *ngIf="currentRoute === '/test'" class="right-div-mobile">
+      <div class="timer-mobile">Timer: &nbsp; <span *ngIf="!isTimerStarted">-</span> <span *ngIf="isTimerStarted"> {{mm}}:{{ss}} </span></div>
+    </div>
+  </div>
 
   <div class="div-content">
     <div class="left-div">
+      <div (click)="onNavClick()" class="side-nav"><mat-icon class="nav-icon">list</mat-icon></div>
+
       <div class="div-val">Welcome {{ user }}!</div>
       <div class="div-val">Time: {{ time | date:"HH:mm:ss" }}</div>
     </div>

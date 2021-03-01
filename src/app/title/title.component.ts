@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { EndTestDialogComponent } from './../end-test-dialog/end-test-dialog.component';
 import { FormSubmitService } from './../form-submit.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -12,12 +12,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class TitleComponent implements OnInit {
 
+  @Output() navEmitter: EventEmitter<boolean> = new EventEmitter();
+
   user = 'User';
   time = new Date();
   isTimerStarted = false;
   isTimerStopped = false;
   mm = 29;
   ss = 59;
+  currentRoute = '';
 
   constructor(private submitService: FormSubmitService, private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar) { }
 
@@ -43,6 +46,8 @@ export class TitleComponent implements OnInit {
     }, 1000);
 
     this.startTimer();
+
+    this.currentRoute = this.router.url;
 
   }
 
@@ -93,6 +98,10 @@ export class TitleComponent implements OnInit {
       }
     }, 1000); */
 
+  }
+
+  onNavClick() {
+    this.navEmitter?.emit(true);
   }
 
   onEndTest() {

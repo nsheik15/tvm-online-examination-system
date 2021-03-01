@@ -13,6 +13,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const matComponents = [
   MatButtonModule,
@@ -28,7 +29,8 @@ const matComponents = [
   MatSnackBarModule,
   MatCheckboxModule,
   MatMenuModule,
-  MatSelectModule
+  MatSelectModule,
+  MatSidenavModule
 ];
 
 @NgModule({
