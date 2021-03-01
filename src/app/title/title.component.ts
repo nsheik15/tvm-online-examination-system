@@ -58,7 +58,7 @@ export class TitleComponent implements OnInit {
       // console.log(this.mm);
       if (this.mm > -1) {
         // console.log(this.mm);
-        if (this.mm < 5) {
+        if (this.mm < 25) {
           this.submitService.isAppearSubmit = true;
         }
         if (this.ss !== 0) {

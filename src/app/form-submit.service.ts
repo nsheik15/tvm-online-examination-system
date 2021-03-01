@@ -44,11 +44,13 @@ export class FormSubmitService {
     localStorage.removeItem('Registration Form Values');
     localStorage.removeItem('Answer Values');
     localStorage.removeItem('Minutes');
+    localStorage.removeItem('selectedSubject');
   }
 
   onFinalSubmit() {
     const formVal = this.getRegistrationFormValues();
     const ansVal = this.getAnswerValues();
+    let subject: any = localStorage.getItem('selectedSubject');
 
     if (formVal && ansVal) {
       var formObj = JSON.parse(formVal);
@@ -97,7 +99,8 @@ export class FormSubmitService {
     .set('entry.401940602', ansObj.q27)
     .set('entry.1220053150', ansObj.q28)
     .set('entry.142852753', ansObj.q29)
-    .set('entry.541722642', ansObj.q30);
+    .set('entry.541722642', ansObj.q30)
+    .set('entry.1406113011', subject);
 
     const fullUrl = `${this.submitUrl}?${params.toString()}`;
 

@@ -12,7 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { PanelComponent } from './panel/panel.component';
 import { FrameComponent } from './frame/frame.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { InstructionsDialogComponent } from './instructions-dialog/instructions-dialog.component';
 import { ResponseComponent } from './response/response.component';
@@ -37,6 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule
   ],

@@ -9,12 +9,20 @@ import { Router } from '@angular/router';
 })
 export class InstructionsDialogComponent implements OnInit {
 
+  subjects = [
+    'Java',
+    'C, C++',
+    'HTML, CSS & JS'
+  ];
+  selectedSubject = '';
+
   constructor(private router: Router, private submitSerivce: FormSubmitService) { }
 
   ngOnInit(): void {
   }
 
   onStart() {
+    localStorage.setItem('selectedSubject', this.selectedSubject);
     this.submitSerivce.isTimerStarted = true;
     this.router.navigate(['test']);
   }

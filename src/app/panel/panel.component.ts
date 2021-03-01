@@ -12,90 +12,10 @@ import arrayShuffle from 'array-shuffle';
   styleUrls: ['./panel.component.scss'],
 })
 export class PanelComponent implements OnInit {
-  active = [
-    true,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ];
-  visited = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ];
-  answered = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ];
+
+  active = [true];
+  visited = [false];
+  answered = [false];
 
   currActive = 1;
   questionForm: FormGroup;
@@ -105,10 +25,13 @@ export class PanelComponent implements OnInit {
   unansweredCount = 0;
   isSubmit = false;
   isSubmitAppears = false;
-  shuffledQuestion: any;/*
-  testCode = 'enum Season{\n\tWINTER,SPRING,SUMMER;\n };\n System.out.println(Season.SPRING.ordinal());'; */
+  shuffledQuestion: any;
+  questionNo = [0];
+  selectedSubject: any;
 
-  question = [
+  question: any;
+
+  questionJava = [
     ['Why we use array as a parameter of main method?', ['It is syntax', 'It can store multiple values', 'Both of above ', 'None of above'], 'q1'],
     ['Can we declare abstract static method?', ['Yes', 'No'], 'q2'],
     ['Which of these is necessary condition for automatic type conversion in Java?', ['The destination type is smaller than source type', 'The destination type is larger than source type', 'The destination type can be larger or smaller than source type', 'None of the mentioned'], 'q3'],
@@ -141,36 +64,71 @@ export class PanelComponent implements OnInit {
     ['	……………………  is used to find and fix bugs in the java program?', ['JVM', 'JRE', 'JDK', 'JDB'], 'q30']
   ];
 
-  /* op1 = ['It is syntax', 'It can store multiple values', 'Both of above ', 'None of above'];
-  op2 = ['Yes', 'No'];
-  op3 = ['The destination type is smaller than source type', 'The destination type is larger than source type', 'The destination type can be larger or smaller than source type', 'None of the mentioned'];
-  op4 = ['prototype( )', 'prototype(void)', 'public prototype(void)', 'public prototype( )'];
-  op5 = ['Type Convention', 'Cascading', 'Truncation', 'Wrapping'];
-  op6 = ['JVM', 'JRE', 'JDK', 'JIT'];
-  op7 = ['Static', 'Default', 'Private', 'protected'];
-  op8 = ['.js', '.text', '.java', '.class'];
-  op9 = ['Final', 'Static', 'Abstract'];
-  op10 = ['Compilation error', 'Program runs fine', 'No Such Method Error', 'None of the above'];
-  op11 = ['By nulling the reference', 'By assigning one reference to another ', 'By Using Object.newInstance() method', 'By anonymous Object method'];
-  op12 = ['1', '0', 'Compilation Error', 'EnumNotDefeinedException'];
-  op13 = ['Default methods', 'Public methods', 'Virtual methods', 'Instance methods'];
-  op14 = ['FileFilter', 'Serializable', 'Externalization', 'ObjectInput'];
-  op15 = ['Heap', 'Java Virtual Machine', 'Stack Memory', 'String constant pool'];
-  op16 = ['start()', 'run()', 'init()', 'go()'];
-  op17 = ['Thread(Runnable threadobject, int priority)', 'Thread(init priority)', 'Thread(Runnable threadObject, String threadName)', 'Thread(String threadName, int priority)', 'None of these'];
-  op18 = ['Using Java Virtual Machine', 'Using Just In Time Compiler', 'Using  Java Development Kit', 'None of the above'];
-  op19 = ['implements', 'extends', 'import', 'interface'];
-  op20 = ['toUpperCase()', 'toLowerCase()', 'equalsIgnore()', 'None of the above'];
-  op21 = ['Yes', 'No'];
-  op22 = ['Interface has only static and final variables', 'Abstract class can have static methods main method and constructor', 'Abstract class support multiple inheritance by default', 'Interface have only abstract methods'];
-  op23 = ['Heap memory', 'Static container', 'Variable', 'JVM'];
-  op24 = ['True', 'False'];
-  op25 = ['isDaemon()', 'setDaemon()', 'daemon()', 'createDaemon()'];
-  op26 = ['java.object', 'java.lang.object', 'java.utill', 'java.class.object'];
-  op27 = ['Yes', 'No'];
-  op28 = ['Nested interface', 'Multiple Interface', 'Marker Interface', 'None of the above'];
-  op29 = ['Static methods', 'Default methods', 'Native methods', 'None of the above'];
-  op30 = ['JVM', 'JRE', 'JDK', 'JDB']; */
+  questionC = [
+    ['What\'s the output?', ['10 9 10', '9 10 9', '9 9 10', 'None of the above'], 'q1', '#include<stdio.h>\nint main()\n{\\nint array[10]={3,0,8,1,12,8,9,2,13,10};\nint x,y,z;\nx=++array[2];\ny=array[2]++;\nz=array[x++];\nprintf("%d %d %d",x,y,z);\nreturn 0;\n}'],
+    ['An uninitialized pointer in C is called ……………………', ['Constructor', 'dangling pointer', 'Wild pointer', 'Destructor'], 'q2'],
+    ['What\'s the output?', ['1 11 10', '10 11 1', '10 11 10', '1 1 10'], 'q3', '#include<stdio.h>\nint main(){\nint a,b,c;\na=b=c=10;\nc=a++||++b && ++c;\nprintf("%d %d %d",c,a,b);\nreturn 0;\n}'],
+    ['What\'s the output?', ['10', 'Compiletime error', '11', '0'], 'q4', '#include<stdio.h>\nint main()\n{\nconst int x=10;\nx++;\nprintf("%d",x);\nreturn 0;\n}'],
+    ['Prototype of a function means?', ['Name of Function', 'Output of Function', 'Declaration of Function', 'Input of a Function'], 'q5'],
+    ['What\'s the output?', ['10', '11', '9', 'compiletime error'], 'q6', '#include<stdio.h>\nint main()\n{\nint i=abc(10);\nprintf("%d",--i);\nreturn 0;\n}\nint abc(int i){\nreturn (i++);\n}'],
+    ['If the two strings are identical,then strcmp() function returns?', ['1', '0', '-1', 'true'], 'q7'],
+    ['What\'s the output?', ['10', '20', '11', '21'], 'q8', '#include<stdio.h>\nint main()\n{\nint a[]={10,20,30};\nprintf("%d",*a+1);\nreturn 0;\n}'],
+    ['In C, which header file should be included to use functions like malloc() and calloc()?', ['memory.h', 'stdlib.h', 'string.h', 'dos.h'], 'q9'],
+    ['Which is not a reserve keyword in c?', ['auto', 'main', 'case', 'register'], 'q10'],
+    ['What\'s the output?', ['black', 'codeblack', 'code', 'compiletime error'], 'q11', '#include<stdio.h>\nint main()\n{\nif(printf("code")!=4){\n}\nelse\nprintf("black");\nreturn 0;\n}'],
+    ['Far pointer can access ……………………', ['Single memory location', 'No memory location', 'All memory location', 'First and Last Memory Address'], 'q12'],
+    ['A pointer pointing to a memory location of the variable even after deletion of the variable is known as?', ['Far pointer', 'dangling pointer', 'null pointer', 'void pointer'], 'q13'],
+    ['What\'s the output?', ['4 2', '2 4', '2 3', '3 2'], 'q14', '#include<stdio.h>\nint main()\n{\nint x=6,y=4,z;\nif(!x>=5)\ny=3;\nz=2;\nprintf("%d %d",z,y);\nreturn 0\n}'],
+    ['A C variable name can start with a?', ['Number', 'Underscore', 'Asterisk', 'Plus sign'], 'q15'],
+    ['RunTime Polymorphism is achieved by?', ['friend function', 'virtual function', 'operator function', 'function overloading'], 'q16'],
+    ['The break statement causes an exit?', ['from the innermost loop only', 'only from the innermost switch', 'from all loops & switches', 'from the innermost loop or switch'], 'q17'],
+    ['It is possible to declare as a friend?', ['a member function', 'a global function', 'a class', 'all the above'], 'q18'],
+    ['The new operator', ['returns a pointer to the variable', 'creates a variable called new', 'obtains memory for a new variable', 'tells how much memory is available'], 'q19'],
+    ['An exception is caused by,', ['a hardware problem', 'a problem in the operation system', 'a syntax error', 'a run-time error'], 'q20'],
+    ['Use of virtual functions implies,', ['overloading', 'overriding', 'static binding', 'dynamic binding'], 'q21'],
+    ['which of the following ways are legal to access a class data member using this pointer?', ['this.x', '*this.x', '*(this.x)', '(*this).x'], 'q22'],
+    ['which of the following declarations are illegal?', ['void*ptr;', 'char*str="hello";', 'char str="hello";', 'const"int p1;'], 'q23'],
+    ['A copy constructor takes', ['no argument', 'one argument', 'two arguments', 'arbitrary no.of arguments'], 'q24'],
+    ['The operator that cannot be overloaded is', ['++', '::', '()', '~'], 'q25'],
+    ['A struct is the same as a class except that', ['there are no member functions', 'all members are public', 'cannot be used in inheritance hierarchy', 'it does have a this pointer'], 'q26'],
+    ['Pure virtual functions', ['have to be redefined in the inherited class', 'cannot have public access specification', 'are mandatory for a virtual class', 'none of the above'], 'q27'],
+    ['Additional information sent when an exception is thrown may be placed in', ['the throw keyword', 'the function that caused the error', 'the catch block', 'an object of the exception class'], 'q28'],
+    ['Given a class named Book, which of the following is not valid constructor?', ['Book(){}', 'Book(Book b){}', 'Book(Book &b){}', 'Book(char*author,char*title){}'], 'q29'],
+    ['A pointer to the base class can hold address of', ['only base class object', 'only derived class object', 'base class object as well as derived class object', 'none of the above'], 'q30']
+  ];
+
+  questionHTML = [
+    ['What is the correct HTML for creating a hyperlink?', ['<a href =” http://WWW.yahoo.com”>yahoo</a>', '<a>http:// WWW.yahoo.com</a>', '<a>url =”http://www.yahoo.com”>yahoo.com</a>', 'Both (a) & (b)'], 'q1'],
+    ['How can you open a link in a new tab/browser window?', ['<a href = “url” target = “_blank”>', '<a href =”url” target =”new”>', '<a href =”url” new>', '<a href = “url” target = “open_blank>'], 'q2'],
+    ['Which of the following is correct way to send mail in HTML?', ['<a href = “mailto : XY@Y”>', '<ahref = “XY@Y”>', '<mail XY@Y</mail>', 'None of the above'], 'q3'],
+    ['What are the some of the key new features in HTML5?', ['FIELDSET', 'LEGEND', ' BDO', 'Web Workers'], 'q4'],
+    ['The tags in HTML are,', ['Case – Sensitive', 'In Upper Case', 'Not Case Sensitive', 'In Lower Case'], 'q5'],
+    ['What is the REFRESH Meta tag used for?', ['Rewrite url', 'Redirect to a new domain', 'Refresh your content', 'Null'], 'q6'],
+    ['Which format usually works best for photos?', ['JPG', 'HTML', 'GIF', 'PNG'], 'q7'],
+    ['What does the GENERATOR Meta tag tell?', ['Who designed the page', 'Which program was used to produce the page', 'What type of server your page is on', 'Both (a) & (b)'], 'q8'],
+    ['Use <td> and </td> to add what to your tables?', ['Columns', 'Rows', 'Steps', 'None of the above'], 'q9'],
+    ['Which of the following attributes below are used for a font name?', ['Font Name', 'Fn', 'Font', 'Face'], 'q10'],
+    ['Which of the following CSS property having first priority?', ['#div test', '.test', 'div #div test', 'div . test'], 'q11'],
+    ['Which of the following selector selects all elements of E that have the attribute attr that end with the given value?', ['E[attr ^ =value]', 'E[attr* =value]', 'E[attr $=value]', 'none of the above'], 'q12'],
+    ['Which of the following selector selects an element that no children?', [':empty', ':nochild', ':inheritance', ':no-child'], 'q13'],
+    ['Which of the following Property is used to increase or decrease hoe bold or light a font appears?', ['font-family', 'font-style', 'font-variant', 'font-weight'], 'q14'],
+    ['If we want to wrap a block of text around image which css property will be use?', ['Wrap', 'push', 'float', 'align'], 'q15'],
+    ['If we want to use a nice looking green dotted border around an image, which css property will we use?', ['border-color', 'border-decoration', 'border-style', 'border-line'], 'q16'],
+    ['Which of the following properties will use to display border around a cell without an content?', ['empty-cell', 'blank-cell', 'non content-cell', 'void-cell'], 'q17'],
+    ['How can we write comment along with css code?', ['/*a comment*/', '//a comment//', '/a comment/', '<’a comment’>'], 'q18'],
+    ['The default value of “position” attribute is..', ['fixed', 'absolute', 'inherit', 'relative'], 'q19'],
+    ['How will you make all paragraph elements ‘RED’ in color?', ['p. all { colour : red}', 'p. all { colour : #990000}', 'all. p { colour: #998877 }', 'p{colour : red}'], 'q20'],
+    ['Which type of  JavaScript language is ?', ['object-oriented', 'object-Based', 'Assembly-language', 'High-level'], 'q21'],
+    ['Which one of the following also known as conditional expression:', ['Alternative to if-else', 'Switch statement', 'If-then-else statement', 'immediate if'], 'q22'],
+    ['The “function” and “var” are known as:', ['keywords', 'Datatypes', 'Declaration statements', 'Prototypes'], 'q23'],
+    ['What is null in javascript', ['null means unknown value', 'null means empty string value', 'null means absence of value', 'null means zero value'], 'q24'],
+    ['which of the folloing is not valid key word in javascript', ['this', 'try', 'module', 'function'], 'q25'],
+    ['What will be the output of the following javascript code,', ['x=undefined', 'x=1', 'x=null', 'error : x is undefined'], 'q26', 'x=1\nconsole.log(\‘x=\’ +x);'],
+    ['what will be the output of  the following  javascript code,', ['No Output', '0', '1', 'null'], 'q27', 'Var x = 0\ndo {\nconsole.log(x)\n}while(x>0)'],
+    ['Which of the following is NOT a javascript object', ['a)var obj = new object()', 'var obj = {  name:”steve”};', 'var obj   = {};', 'var obj = {name:”steve”};'], 'q28'],
+    ['In the javascript, which one of the folloing is not considered as an error:', ['Division by zero', 'Missing of semicolons', 'syntax error', 'Missing of  Brackets'], 'q29'],
+    ['which of the following function of the string object returns the character in the string starting at the specified number of characters?', ['slice', 'split', 'substr()', 'search()'], 'q30']
+  ];
 
   get q1() {
     return this.questionForm.get('q1');
@@ -321,9 +279,20 @@ export class PanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.snackBar.open('Registration Successful!', 'close', {
       duration: 3000
     });
+
+    this.selectedSubject = localStorage.getItem('selectedSubject');
+    if(this.selectedSubject === 'Java') {
+      this.question = this.questionJava;
+    } else if(this.selectedSubject === 'C, C++') {
+      this.question = this.questionC;
+    } else if(this.selectedSubject === 'HTML, CSS & JS') {
+      this.question = this.questionHTML;
+    }
+
     this.findUnvisitedCount();
     let ansVal = this.submitService.getAnswerValues();
 
@@ -331,48 +300,29 @@ export class PanelComponent implements OnInit {
       let ansObj = JSON.parse(ansVal);
 
       this.questionForm.setValue(ansObj);
-    }/*
-
-    console.log('Test Code: \n', this.testCode); */
+    }
 
     this.shuffledQuestion = arrayShuffle(this.question);
-    this.shuffledQuestion[0][1] = arrayShuffle(this.shuffledQuestion[0][1]);
-    this.shuffledQuestion[1][1] = arrayShuffle(this.shuffledQuestion[1][1]);
-    this.shuffledQuestion[2][1] = arrayShuffle(this.shuffledQuestion[2][1]);
-    this.shuffledQuestion[3][1] = arrayShuffle(this.shuffledQuestion[3][1]);
-    this.shuffledQuestion[4][1] = arrayShuffle(this.shuffledQuestion[4][1]);
-    this.shuffledQuestion[5][1] = arrayShuffle(this.shuffledQuestion[5][1]);
-    this.shuffledQuestion[6][1] = arrayShuffle(this.shuffledQuestion[6][1]);
-    this.shuffledQuestion[7][1] = arrayShuffle(this.shuffledQuestion[7][1]);
-    this.shuffledQuestion[8][1] = arrayShuffle(this.shuffledQuestion[8][1]);
-    this.shuffledQuestion[9][1] = arrayShuffle(this.shuffledQuestion[9][1]);
-    this.shuffledQuestion[10][1] = arrayShuffle(this.shuffledQuestion[10][1]);
-    this.shuffledQuestion[11][1] = arrayShuffle(this.shuffledQuestion[11][1]);
-    this.shuffledQuestion[12][1] = arrayShuffle(this.shuffledQuestion[12][1]);
-    this.shuffledQuestion[13][1] = arrayShuffle(this.shuffledQuestion[13][1]);
-    this.shuffledQuestion[14][1] = arrayShuffle(this.shuffledQuestion[14][1]);
-    this.shuffledQuestion[15][1] = arrayShuffle(this.shuffledQuestion[15][1]);
-    this.shuffledQuestion[16][1] = arrayShuffle(this.shuffledQuestion[16][1]);
-    this.shuffledQuestion[17][1] = arrayShuffle(this.shuffledQuestion[17][1]);
-    this.shuffledQuestion[18][1] = arrayShuffle(this.shuffledQuestion[18][1]);
-    this.shuffledQuestion[19][1] = arrayShuffle(this.shuffledQuestion[19][1]);
-    this.shuffledQuestion[20][1] = arrayShuffle(this.shuffledQuestion[20][1]);
-    this.shuffledQuestion[21][1] = arrayShuffle(this.shuffledQuestion[21][1]);
-    this.shuffledQuestion[22][1] = arrayShuffle(this.shuffledQuestion[22][1]);
-    this.shuffledQuestion[23][1] = arrayShuffle(this.shuffledQuestion[23][1]);
-    this.shuffledQuestion[24][1] = arrayShuffle(this.shuffledQuestion[24][1]);
-    this.shuffledQuestion[25][1] = arrayShuffle(this.shuffledQuestion[25][1]);
-    this.shuffledQuestion[26][1] = arrayShuffle(this.shuffledQuestion[26][1]);
-    this.shuffledQuestion[27][1] = arrayShuffle(this.shuffledQuestion[27][1]);
-    this.shuffledQuestion[28][1] = arrayShuffle(this.shuffledQuestion[28][1]);
-    this.shuffledQuestion[29][1] = arrayShuffle(this.shuffledQuestion[29][1]);
+    for(let i=0; i<30; i++) {
+      this.shuffledQuestion[i][1] = arrayShuffle(this.shuffledQuestion[i][1]);
+    }
+
+    for(let i=0; i<30; i++) {
+      if(i === 0) {
+        this.active[i] = true;
+      } else {
+        this.active[i] = false;
+      }
+      this.visited[i] = false;
+      this.answered[i] = false;
+      this.questionNo[i] = i+1;
+    }
 
     setInterval(() => {
       if (!this.isSubmitAppears) {
         this.isSubmitAppears = this.submitService.isAppearSubmit;
       } else {
         this.isSubmitAppears = this.submitService.isAppearSubmit;
-        // console.log(this.isSubmitAppears);
       }
     }, 1000);
 
@@ -470,214 +420,216 @@ export class PanelComponent implements OnInit {
     }
   }
 
-  on1() {
-    this.setVisitedAnswered();
-    this.currActive = 1;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+  onQuestionChange(number: any) {
+    if(number === 1) {
+      this.setVisitedAnswered();
+      this.currActive = 1;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on2() {
-    this.setVisitedAnswered();
-    this.currActive = 2;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 2) {
+      this.setVisitedAnswered();
+      this.currActive = 2;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on3() {
-    this.setVisitedAnswered();
-    this.currActive = 3;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 3) {
+      this.setVisitedAnswered();
+      this.currActive = 3;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on4() {
-    this.setVisitedAnswered();
-    this.currActive = 4;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 4) {
+      this.setVisitedAnswered();
+      this.currActive = 4;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on5() {
-    this.setVisitedAnswered();
-    this.currActive = 5;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 5) {
+      this.setVisitedAnswered();
+      this.currActive = 5;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on6() {
-    this.setVisitedAnswered();
-    this.currActive = 6;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 6) {
+      this.setVisitedAnswered();
+      this.currActive = 6;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on7() {
-    this.setVisitedAnswered();
-    this.currActive = 7;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 7) {
+      this.setVisitedAnswered();
+      this.currActive = 7;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on8() {
-    this.setVisitedAnswered();
-    this.currActive = 8;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 8) {
+      this.setVisitedAnswered();
+      this.currActive = 8;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on9() {
-    this.setVisitedAnswered();
-    this.currActive = 9;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 9) {
+      this.setVisitedAnswered();
+      this.currActive = 9;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on10() {
-    this.setVisitedAnswered();
-    this.currActive = 10;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 10) {
+      this.setVisitedAnswered();
+      this.currActive = 10;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on11() {
-    this.setVisitedAnswered();
-    this.currActive = 11;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 11) {
+      this.setVisitedAnswered();
+      this.currActive = 11;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on12() {
-    this.setVisitedAnswered();
-    this.currActive = 12;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 12) {
+      this.setVisitedAnswered();
+      this.currActive = 12;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on13() {
-    this.setVisitedAnswered();
-    this.currActive = 13;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 13) {
+      this.setVisitedAnswered();
+      this.currActive = 13;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on14() {
-    this.setVisitedAnswered();
-    this.currActive = 14;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 14) {
+      this.setVisitedAnswered();
+      this.currActive = 14;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on15() {
-    this.setVisitedAnswered();
-    this.currActive = 15;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 15) {
+      this.setVisitedAnswered();
+      this.currActive = 15;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on16() {
-    this.setVisitedAnswered();
-    this.currActive = 16;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 16) {
+      this.setVisitedAnswered();
+      this.currActive = 16;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on17() {
-    this.setVisitedAnswered();
-    this.currActive = 17;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 17) {
+      this.setVisitedAnswered();
+      this.currActive = 17;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on18() {
-    this.setVisitedAnswered();
-    this.currActive = 18;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 18) {
+      this.setVisitedAnswered();
+      this.currActive = 18;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on19() {
-    this.setVisitedAnswered();
-    this.currActive = 19;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 19) {
+      this.setVisitedAnswered();
+      this.currActive = 19;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on20() {
-    this.setVisitedAnswered();
-    this.currActive = 20;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 20) {
+      this.setVisitedAnswered();
+      this.currActive = 20;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on21() {
-    this.setVisitedAnswered();
-    this.currActive = 21;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 21) {
+      this.setVisitedAnswered();
+      this.currActive = 21;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on22() {
-    this.setVisitedAnswered();
-    this.currActive = 22;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 22) {
+      this.setVisitedAnswered();
+      this.currActive = 22;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on23() {
-    this.setVisitedAnswered();
-    this.currActive = 23;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 23) {
+      this.setVisitedAnswered();
+      this.currActive = 23;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on24() {
-    this.setVisitedAnswered();
-    this.currActive = 24;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 24) {
+      this.setVisitedAnswered();
+      this.currActive = 24;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on25() {
-    this.setVisitedAnswered();
-    this.currActive = 25;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 25) {
+      this.setVisitedAnswered();
+      this.currActive = 25;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on26() {
-    this.setVisitedAnswered();
-    this.currActive = 26;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 26) {
+      this.setVisitedAnswered();
+      this.currActive = 26;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on27() {
-    this.setVisitedAnswered();
-    this.currActive = 27;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 27) {
+      this.setVisitedAnswered();
+      this.currActive = 27;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on28() {
-    this.setVisitedAnswered();
-    this.currActive = 28;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 28) {
+      this.setVisitedAnswered();
+      this.currActive = 28;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on29() {
-    this.setVisitedAnswered();
-    this.currActive = 29;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
-  }
+    else if(number === 29) {
+      this.setVisitedAnswered();
+      this.currActive = 29;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
 
-  on30() {
-    this.setVisitedAnswered();
-    this.currActive = 30;
-    this.findUnvisitedCount();
-    this.active[this.currActive - 1] = true;
+    else if(number === 30) {
+      this.setVisitedAnswered();
+      this.currActive = 30;
+      this.findUnvisitedCount();
+      this.active[this.currActive - 1] = true;
+    }
   }
 
   onNext() {
@@ -818,7 +770,6 @@ export class PanelComponent implements OnInit {
     }
 
     this.answered[this.currActive - 1] = false;
-    // console.log(this.answered);
   }
 
   onChange() {
