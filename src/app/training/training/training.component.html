@@ -1,0 +1,128 @@
+<div class="div-container">
+    <div class="title">
+      <exam-title [title]="title"></exam-title>
+    </div>
+    <div class="registration-form">
+        Test
+        <form [formGroup]="trainingForm" (ngSubmit)="onSubmit()" >
+          <h2>Enter your Details</h2>
+          <div class="title-underline">
+            <div class="title-circle-left"></div>
+            <div class="title-line"></div>
+            <div class="title-circle-right"></div>
+          </div>
+
+          <div class="page" *ngIf="pageNo === 1">
+
+            <mat-form-field class="form-fields">
+              <mat-label>Name</mat-label>
+              <input type="text" matInput formControlName="name" [errorStateMatcher]="matcher" required>
+              <mat-hint>Eg. Tony Stark</mat-hint>
+              <!-- <mat-error *ngIf="name.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error> -->
+              <mat-error *ngIf="name?.errors?.required">
+                Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-fields">
+              <mat-label>Email</mat-label>
+              <input type="email" matInput formControlName="email" [errorStateMatcher]="matcher" required>
+              <mat-hint>Eg. example@example.com</mat-hint>
+              <mat-error *ngIf="email?.errors?.email">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="email?.errors?.required">
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-fields">
+              <mat-label>Mobile Number</mat-label>
+              <input type="text" matInput formControlName="mobileNo" [errorStateMatcher]="matcher" required>
+              <mat-hint>Eg. +919876598765, 9876598765</mat-hint>
+              <mat-error *ngIf="mobileNo?.errors?.pattern">
+                Please enter a valid Mobile Number
+              </mat-error>
+              <mat-error *ngIf="mobileNo?.errors?.required">
+                Mobile Number is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-fields dob">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="dob" [disabled]="true" [errorStateMatcher]="matcher" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker disabled="false"></mat-datepicker>
+              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-error *ngIf="dob?.errors?.required">
+                Date of Birth is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <div class="form-fields btn-div">
+              <button class="btn" mat-raised-button color="primary" (click)="onNext()">Next</button>
+            </div>
+          </div>
+
+          <div class="page" *ngIf="pageNo === 2">
+
+            <mat-form-field class="form-fields">
+              <mat-label>Register Number</mat-label>
+              <input type="text" matInput formControlName="registerNumber" [errorStateMatcher]="matcher" required>
+              <mat-hint>Eg. 812616104019</mat-hint>
+              <mat-error *ngIf="registerNumber?.errors?.required">
+                Register Number is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-fields">
+              <mat-label>College Name</mat-label>
+              <input type="text" matInput formControlName="collegeName" [errorStateMatcher]="matcher" required>
+              <mat-hint>Eg. Anna University, Guindy</mat-hint>
+              <mat-error *ngIf="collegeName?.errors?.required">
+                College Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-fields">
+              <mat-label>Course</mat-label>
+              <input type="text" matInput formControlName="course" [errorStateMatcher]="matcher" required>
+              <mat-hint>Eg. B.E., B.Tech., ...</mat-hint>
+              <mat-error *ngIf="course?.errors?.required">
+                Course is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-fields">
+              <mat-label>Department</mat-label>
+              <input type="text" matInput formControlName="department" [errorStateMatcher]="matcher" required>
+              <mat-hint>Eg. Computer Science & Engineering, ...</mat-hint>
+              <mat-error *ngIf="department?.errors?.required">
+                Department is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-fields">
+              <mat-label>Semester</mat-label>
+              <input type="text" matInput formControlName="semester" [errorStateMatcher]="matcher" required [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let sem of semesterList" [value]="sem">
+                  {{ sem }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-hint>Eg. 1, 2, 3, ...</mat-hint>
+              <mat-error *ngIf="semester?.errors?.required">
+                Semester is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <div class="form-fields btn-div">
+              <button class="btn" mat-raised-button color="primary" (click)="onPrev()">Prev.</button>
+              <button [disabled]="trainingForm.invalid" class="btn" mat-raised-button color="primary" type="submit">Enroll Now</button>
+            </div>
+          </div>
+        </form>
+    </div>
+  </div>

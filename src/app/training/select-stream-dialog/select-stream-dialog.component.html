@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Select Course</h2>
+<mat-dialog-content class="mat-typography">
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Choose the subject</mat-label>
+      <mat-select [(ngModel)]="selectedSubject">
+        <mat-option *ngFor="let subject of subjects" [value]="subject">
+          {{subject}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align=end>
+  <button mat-button [mat-dialog-close]="true" mat-dialog-close color="accent">Cancel</button>
+  <button [disabled]="selectedSubject === ''" mat-raised-button [mat-dialog-close]="false" cdkFocusInitial color="primary" (click)="submit()">Let's Begin</button>
+</mat-dialog-actions>
